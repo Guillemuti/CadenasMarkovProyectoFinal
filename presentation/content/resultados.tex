@@ -1,0 +1,220 @@
+\section{Aplicaciones Empíricas}
+
+\begin{frame}{Dos Casos de Estudio}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Caso 1: S\&P 500}
+                \begin{itemize}
+                    \item Retornos logarítmicos diarios
+                    \item Período: 2022-2024
+                    \item $n = 636$ observaciones
+                    \item \textbf{Hipótesis}: NO $\beta$-mezclado
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Caso 2: Retrasos de Vuelos}
+                \begin{itemize}
+                    \item Proporción diaria de delays
+                    \item Período: Ene-Jul 2025
+                    \item $n = 212$ días
+                    \item \textbf{Hipótesis}: SÍ $\beta$-mezclado
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+
+    \begin{itemize}
+        \item<2-> Objetivo: \highlight{Contrastar} comportamientos de procesos con memoria larga vs corta
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Aplicación 1: S\&P 500}
+    \framesubtitle{Retornos Logarítmicos}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{../ProjectoCadenas/images/beta_retornos_sp500.png}
+                \caption{\footnotesize Coeficiente $\beta$ vs lag}
+            \end{figure}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \textbf{Observaciones:}
+            \begin{itemize}
+                \item<2-> $\hat{\beta}(1) \approx 0.05$-$0.15$
+                \item<3-> Curva \textbf{estable} en todos los lags
+                \item<4-> Sin evidencia de decaimiento
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{S\&P 500: Análisis de Decaimiento}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{../ProjectoCadenas/images/beta_decaimiento.png}
+        \caption{Decaimiento del coeficiente $\beta$ para S\&P 500}
+    \end{figure}
+
+    \begin{itemize}
+        \item<2-> Pendiente de regresión: $-0.00003$ (prácticamente nula)
+        \item<3-> $R^2 = 0.0012$ (ajuste nulo)
+        \item<4-> Razón final/inicial: $0.971$ (decaimiento del 2.9\% solamente)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{S\&P 500: Conclusión}
+    \begin{alertblock}{Resultado}
+        Los retornos del S\&P 500 \textbf{NO son $\beta$-mezclados}
+    \end{alertblock}
+
+    \vspace{0.5em}
+
+    \textbf{Interpretación:}
+    \begin{itemize}
+        \item<2-> Evidencia de \emphasis{memoria larga} en el proceso
+        \item<3-> Consistente con \highlight{volatility clustering}
+        \item<4-> Dependencia no lineal capturada por modelos GARCH
+        \item<5-> Implicaciones: CLT clásico puede no ser válido
+    \end{itemize}
+
+    \vspace{0.5em}
+
+    \begin{block}<6->{Validación GARCH}
+        Parámetros estimados: $\alpha + \beta = 0.9459$ (alta persistencia)
+    \end{block}
+\end{frame}
+
+\begin{frame}{Aplicación 2: Retrasos de Vuelos}
+    \framesubtitle{Datos}
+
+    \begin{itemize}
+        \item Proporción diaria de vuelos retrasados $\geq 15$ min
+        \item Total: 4,078,104 vuelos
+        \item Análisis general + análisis específico para LAX
+    \end{itemize}
+
+    \vspace{0.5em}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.6\textwidth]{../ProjectoCadenas/images/beta_delays_serie_temporal.png}
+        \caption{\footnotesize Serie temporal de proporción de retrasos}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{Delays: Convergencia del Estimador}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.75\textwidth]{../ProjectoCadenas/images/beta_delays_convergencia_lags.png}
+        \caption{Convergencia de $\hat{\beta}^{d_n}(a)$ conforme $n$ crece}
+    \end{figure}
+
+    \begin{itemize}
+        \item<2-> Estimadores se \highlight{estabilizan} con $n$ creciente
+        \item<3-> Confirma convergencia según Teorema de McDonald
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Delays: Comparación General vs LAX}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.75\textwidth]{../ProjectoCadenas/images/beta_delays_comparacion_general_lax.png}
+        \caption{Comparación de coeficientes: General vs LAX}
+    \end{figure}
+
+    \begin{itemize}
+        \item<2-> Ambos exhiben \textbf{decaimiento similar}
+        \item<3-> LAX muestra coeficientes ligeramente menores
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Delays: Análisis de Decaimiento}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.65\textwidth]{../ProjectoCadenas/images/beta_delays_decaimiento.png}
+        \caption{Decaimiento exponencial hacia cero}
+    \end{figure}
+
+    \vspace{-0.5em}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{General:}
+            \begin{itemize}
+                \item Pendiente: $-0.0275$
+                \item $R^2 = 0.892$
+                \item Decaimiento: 99.3\%
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{LAX:}
+            \begin{itemize}
+                \item Pendiente: $-0.0248$
+                \item $R^2 = 0.903$
+                \item Decaimiento: 99.4\%
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Delays: Conclusión}
+    \begin{block}{Resultado}
+        Los retrasos de vuelos \textbf{SÍ son $\beta$-mezclados}
+    \end{block}
+
+    \vspace{0.5em}
+
+    \textbf{Interpretación:}
+    \begin{itemize}
+        \item<2-> Evidencia clara de \emphasis{memoria corta}
+        \item<3-> $\hat{\beta}(a) \to 0$ exponencialmente rápido
+        \item<4-> Shocks temporales (clima, congestión) tienen efectos \highlight{limitados en el tiempo}
+        \item<5-> Sistema aeroportuario se recupera rápidamente de disrupciones
+        \item<6-> Teoremas límite clásicos (CLT, LLN) son aplicables
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Comparación: Memoria Larga vs Corta}
+    \begin{table}
+        \centering
+        \footnotesize
+        \begin{tabular}{lcc}
+            \toprule
+            \textbf{Característica} & \textbf{S\&P 500} & \textbf{Delays} \\
+            \midrule
+            $\hat{\beta}(1)$ & 0.501 & 0.827 \\
+            $\hat{\beta}(10)$ & 0.482 & 0.056 \\
+            $\hat{\beta}(30)$ & 0.485 & 0.005 \\
+            \midrule
+            Pendiente regresión & $-0.00003$ & $-0.0275$ \\
+            $R^2$ & 0.0012 & 0.892 \\
+            Decaimiento (\%) & 2.9\% & 99.3\% \\
+            \midrule
+            \textbf{¿$\beta$-mezclado?} & \textbf{NO} & \textbf{SÍ} \\
+            Tipo de memoria & Larga & Corta \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> El estimador de McDonald permite \highlight{distinguir} efectivamente entre ambos tipos
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Contraste Visual}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.48\textwidth]{../ProjectoCadenas/images/beta_decaimiento.png}
+        \includegraphics[width=0.48\textwidth]{../ProjectoCadenas/images/beta_delays_decaimiento.png}
+        \caption{Izquierda: S\&P 500 (NO mezclado). Derecha: Delays (SÍ mezclado)}
+    \end{figure}
+\end{frame}

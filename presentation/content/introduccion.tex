@@ -1,0 +1,51 @@
+\section{Introducción}
+
+\begin{frame}{Introducción}
+    \begin{itemize}
+        \item<1-> Los \emphasis{coeficientes de mezcla} cuantifican la dependencia temporal en procesos estocásticos
+        \item<2-> El coeficiente $\beta$ (regularidad absoluta) es fundamental para:
+        \begin{itemize}
+            \item Estudio de cadenas de Markov
+            \item Métodos MCMC (Monte Carlo via Markov Chains)
+            \item Teoremas límite para datos dependientes
+        \end{itemize}
+        \item<3-> Pregunta clave: \highlight{¿Cómo medir empíricamente estos coeficientes?}
+        \item<4-> Aplicación: Análisis de series temporales reales
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Motivación}
+    \begin{columns}
+        \begin{column}{0.55\textwidth}
+            \begin{itemize}
+                \item<1-> Los procesos estocásticos pueden tener \emphasis{memoria larga} o \emphasis{memoria corta}
+                \item<2-> Procesos $\beta$-mezclados: $\beta(a) \to 0$ cuando $a \to \infty$
+                \item<3-> ¿Cómo distinguir empíricamente entre ambos tipos?
+                \item<4-> McDonald (2015) propone estimador por histogramas
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.45\textwidth}
+            \begin{block}{Definición Informal}
+                El coeficiente $\beta(a)$ mide qué tan \textbf{independientes} son dos bloques de datos separados por $a$ pasos de tiempo.
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Objetivos}
+    \begin{block}{Objetivo General}
+        Estudiar los coeficientes de mezcla $\beta$ para cadenas de Markov, implementar el estimador de McDonald (2015) y aplicarlo a datos reales para distinguir procesos mezclados de no mezclados.
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{block}{Objetivos Específicos}
+        \begin{enumerate}
+            \item Desarrollar marco teórico de coeficientes $\beta$-mezclados
+            \item Estudiar el estimador por histogramas de McDonald
+            \item Implementar estimador con parámetros adaptativos
+            \item Aplicar a S\&P 500 (memoria larga) y retrasos de vuelos (memoria corta)
+            \item Comparar y contrastar resultados empíricos
+        \end{enumerate}
+    \end{block}
+\end{frame}

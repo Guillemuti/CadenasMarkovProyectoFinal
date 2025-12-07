@@ -1,0 +1,113 @@
+\section{Conclusiones}
+
+\begin{frame}{Conclusiones Principales}
+    \begin{enumerate}
+        \item<1-> \textbf{Utilidad del Estimador de McDonald}
+        \begin{itemize}
+            \item Permite verificar empíricamente la propiedad de $\beta$-mezcla
+            \item Distingue efectivamente entre procesos con memoria larga y corta
+            \item Convergencia verificada conforme $n$ crece
+        \end{itemize}
+
+        \item<2-> \textbf{S\&P 500: Memoria Larga}
+        \begin{itemize}
+            \item $\hat{\beta}(a)$ NO decrece hacia cero
+            \item Evidencia de volatility clustering y dependencia persistente
+            \item Consistente con modelos GARCH de alta persistencia
+        \end{itemize}
+
+        \item<3-> \textbf{Retrasos de Vuelos: Memoria Corta}
+        \begin{itemize}
+            \item $\hat{\beta}(a) \to 0$ exponencialmente rápido
+            \item Sistema se recupera rápidamente de disrupciones
+            \item Teoremas límite clásicos son aplicables
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Implicaciones Teóricas y Prácticas}
+    \begin{block}{Implicaciones Teóricas}
+        \begin{itemize}
+            \item<1-> Validación empírica del Teorema de McDonald (2015)
+            \item<2-> Condiciones de convergencia verificadas en ambos casos
+            \item<3-> Conexión entre ergodicidad geométrica y $\beta$-mezcla confirmada
+        \end{itemize}
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{block}<4->{Implicaciones Prácticas}
+        \begin{itemize}
+            \item Modelado financiero: Requiere métodos más sofisticados que CLT clásico
+            \item Sistemas operacionales (aeropuertos): Análisis estadístico estándar es válido
+            \item Herramienta diagnóstica para determinar validez de supuestos estadísticos
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Hallazgos Clave}
+    \begin{alertblock}{Contraste Fundamental}
+        Los dos procesos estudiados exhiben \textbf{estructuras de dependencia cualitativamente distintas}:
+    \end{alertblock}
+
+    \vspace{0.5em}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Mercados Financieros:}
+            \begin{itemize}
+                \item Dependencia persistente
+                \item Memoria larga
+                \item $\beta(a) \not\to 0$
+                \item Requieren teoría asintótica avanzada
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \textbf{Sistemas Operacionales:}
+            \begin{itemize}
+                \item Independencia asintótica
+                \item Memoria corta
+                \item $\beta(a) \to 0$
+                \item Teoremas clásicos aplicables
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Trabajo Futuro}
+    \begin{block}{Extensiones Metodológicas}
+        \begin{itemize}
+            \item Explorar otros coeficientes de mezcla ($\alpha$, $\rho$, $\phi$)
+            \item Desarrollar tests formales de hipótesis para $\beta$-mezcla
+            \item Estudiar tasas de convergencia del estimador
+        \end{itemize}
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{block}{Aplicaciones Adicionales}
+        \begin{itemize}
+            \item Cadenas de Markov en biología (modelos de población)
+            \item Procesos climáticos y meteorológicos
+            \item Redes neuronales recurrentes y series temporales
+            \item Análisis de tráfico de redes y telecomunicaciones
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+\begin{frame}{Referencias Principales}
+    \begin{thebibliography}{9}
+        \bibitem{mcdonald2015}
+        McDonald, D. J. (2015). Histogram estimation from dependent data. \textit{arXiv preprint arXiv:1508.07322}.
+
+        \bibitem{bradley2005}
+        Bradley, R. C. (2005). Basic properties of strong mixing conditions. \textit{Probability Surveys}, 2, 107-144.
+
+        \bibitem{douc2018}
+        Douc, R., Moulines, E., Priouret, P., \& Soulier, P. (2018). \textit{Markov chains}. Springer.
+
+        \bibitem{tierney1994}
+        Tierney, L. (1994). Markov chains for exploring posterior distributions. \textit{The Annals of Statistics}, 22(4), 1701-1728.
+    \end{thebibliography}
+\end{frame}

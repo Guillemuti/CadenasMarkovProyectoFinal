@@ -1,0 +1,96 @@
+\section{Marco Teórico}
+
+\begin{frame}{Coeficientes de Mezcla}
+    \begin{definition}
+        Para un proceso estocástico $\{X_t\}$, el \textbf{coeficiente de mezcla $\beta$} se define como:
+        {\small $$\beta(n) = \sup \frac{1}{2} \sum_{i,j} |P(A_i \cap B_j) - P(A_i)P(B_j)|$$}
+        donde el supremo se toma sobre particiones finitas de $\sigma(X_1, \ldots, X_k)$ y $\sigma(X_{k+n}, X_{k+n+1}, \ldots)$
+    \end{definition}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> $\beta(n)$ mide la \emphasis{dependencia} entre pasado y futuro
+        \item<3-> $0 \leq \beta(n) \leq 1$ para todo $n$
+        \item<4-> $\beta(n)$ es \highlight{no creciente} en $n$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Procesos $\beta$-Mezclados}
+    \begin{block}{Definición}
+        Un proceso es \textbf{$\beta$-mezclado} si:
+        $$\beta(n) \to 0 \quad \text{cuando} \quad n \to \infty$$
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Interpretación:}
+            \begin{itemize}
+                \item<2-> Pasado y futuro se vuelven \emphasis{asintóticamente independientes}
+                \item<3-> Memoria \highlight{corta}
+                \item<4-> Permite CLT y LLN
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{NO $\beta$-mezclado:}
+            \begin{itemize}
+                \item<2-> $\beta(n) \not\to 0$
+                \item<3-> Memoria \highlight{larga}
+                \item<4-> Dependencia persistente
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Propiedades Fundamentales}
+    \begin{theorem}[Monotonicidad]
+        Para todo $m \leq n$: $\beta(n) \leq \beta(m)$
+    \end{theorem}
+
+    \vspace{0.5em}
+
+    \begin{theorem}[Subaditividad]
+        $\beta(m+n) \leq \beta(m) + \beta(n)$
+    \end{theorem}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> Estas propiedades son fundamentales para teoría asintótica
+        \item<3-> Permiten establecer tasas de convergencia en teoremas límite
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Cadenas de Markov y $\beta$-Mezcla}
+    \begin{theorem}
+        Si una cadena de Markov es \textbf{geométricamente ergódica}, entonces es $\beta$-mezclada con:
+        $$\beta(n) \leq C \rho^n$$
+        para constantes $C > 0$ y $0 < \rho < 1$
+    \end{theorem}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> Decaimiento \highlight{exponencial} de $\beta(n)$
+        \item<3-> Muchas cadenas de Markov prácticas son geométricamente ergódicas
+        \item<4-> Ejemplo: Metropolis-Hastings bajo condiciones regulares
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Ejemplo: Metropolis-Hastings}
+    El algoritmo MH genera cadena de Markov $\{X_t\}$ con:
+    \begin{itemize}
+        \item<1-> Propuesta: $Y \sim q(\cdot | X_t)$
+        \item<2-> Probabilidad de aceptación:
+        {\small $$\alpha(X_t, Y) = \min\left\{1, \frac{\pi(Y)q(X_t|Y)}{\pi(X_t)q(Y|X_t)}\right\}$$}
+        \item<3-> Si aceptada: $X_{t+1} = Y$, si no: $X_{t+1} = X_t$
+    \end{itemize}
+
+    \vspace{0.5em}
+
+    \begin{block}<4->{Ergodicidad Geométrica}
+        Bajo condiciones de drift (Rosenthal 1995), MH es geométricamente ergódico, por tanto $\beta$-mezclado
+    \end{block}
+\end{frame}

@@ -1,0 +1,22 @@
+\frametitle{Especificación del Modelo}
+\begin{block}{Código Python}
+        \begin{verbatim}
+modelo_garch = arch_model(
+    retornos.dropna(),
+    vol='GARCH',
+    p=1,  # Orden ARCH
+    q=1,  # Orden GARCH
+    mean='Constant',
+    dist='Normal',
+    rescale=True
+)
+        \end{verbatim}
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> \textbf{Media constante}: $\mu$
+        \item<3-> \textbf{Volatilidad GARCH(1,1)}: $h_t = \omega + \alpha_1 Z_{t-1}^2 + \beta_1 h_{t-1}$
+        \item<4-> \textbf{Distribución normal} para residuos estandarizados
+    \end{itemize}

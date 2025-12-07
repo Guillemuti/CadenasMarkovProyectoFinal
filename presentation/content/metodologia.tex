@@ -1,0 +1,113 @@
+\section{Estimador de McDonald}
+
+\begin{frame}{Problema: Estimación Empírica de $\beta$}
+    \begin{block}{Desafío}
+        La definición teórica de $\beta(n)$ requiere conocer las distribuciones conjuntas, que en práctica son \textbf{desconocidas}
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> McDonald (2015) propone primer método de estimación para procesos $\beta$-mezclados
+        \item<3-> Utiliza \highlight{estimadores por histogramas} de densidades
+        \item<4-> Permite verificar empíricamente si un proceso es $\beta$-mezclado
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Estimador de McDonald}
+    Para bloques de tamaño $d$ separados por lag $a$:
+
+    \begin{block}{Definición}
+        {\small $$\hat{\beta}^{d}(a) = \frac{1}{2} \int_{\Omega^{2d}} \left|\hat{f}^{2d}_{a}-\hat{f}^d \otimes\hat{f}^d\right| dx$$}
+    \end{block}
+
+    \vspace{0.5em}
+
+    donde:
+    \begin{itemize}
+        \item<2-> $\hat{f}^d$: estimador por histograma de bloques de tamaño $d$
+        \item<3-> $\hat{f}^{2d}_a$: estimador de dos bloques separados por lag $a$
+        \item<4-> $\otimes$: producto tensorial de densidades
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Estimadores por Histogramas}
+    \begin{align*}
+        \hat{f}^{d}(x) &= \sum \mathds{1}_{[x\in B(x) ]}\frac{1}{n-d+1}\sum_{i=1}^{n-d+1} \frac{\mathds{1}_{[X_{i:i+d-1}\in B(x)]}} {h^{d}_{n}}
+    \end{align*}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> $h_n$: \textbf{ancho de bins} (particiones del espacio)
+        \item<3-> $d$: \textbf{dimensión de bloques}
+        \item<4-> Ambos parámetros deben crecer/decrecer \highlight{apropiadamente} con $n$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Parámetros Adaptativos}
+    \begin{block}{Condiciones de Convergencia (McDonald 2015)}
+        Para que $\hat{\beta}^{d_n}(a) \xrightarrow{P} \beta(a)$:
+        \begin{enumerate}
+            \item $nh_n^{d_n} \to \infty$ (suficientes observaciones por bin)
+            \item $d_n h_n \to 0$ (bins decrecen adecuadamente)
+            \item $d_n \to \infty$ (dimensión crece)
+            \item $h_n \to 0$ (ancho de bins tiende a cero)
+        \end{enumerate}
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{itemize}
+        \item<2-> Implementación: $d_n = \max\{1, \lfloor \log_2(n/20) \rfloor\}$
+        \item<3-> Ancho de bins: $h_n = n^{-1/(2d_n+1)}$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Implementación Computacional}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Datos Necesarios}
+                \begin{itemize}
+                    \item Serie temporal $\{X_t\}_{t=1}^n$
+                    \item Rango de lags $a = 1, \ldots, a_{\max}$
+                    \item Parámetros $d_n$, $h_n$
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.5\textwidth}
+            \begin{block}{Software}
+                \begin{itemize}
+                    \item \textbf{Python/NumPy}
+                    \item Implementación propia del estimador
+                    \item Visualizaciones con Matplotlib/Seaborn
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{1em}
+
+    \begin{itemize}
+        \item<2-> Análisis de \highlight{convergencia} conforme $n$ crece
+        \item<3-> Verificación de \highlight{decaimiento} de $\hat{\beta}^{d_n}(a)$ vs $a$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Interpretación de Resultados}
+    \begin{block}{Criterio de $\beta$-Mezcla}
+        Un proceso se considera $\beta$-mezclado si:
+        $$\hat{\beta}^{d_n}(a) \to 0 \quad \text{cuando} \quad a \to \infty$$
+    \end{block}
+
+    \vspace{0.5em}
+
+    \textbf{Verificación empírica:}
+    \begin{itemize}
+        \item<2-> Graficar $\hat{\beta}^{d_n}(a)$ vs $a$
+        \item<3-> Calcular regresión lineal: pendiente negativa indica decaimiento
+        \item<4-> Medir razón $\hat{\beta}(a_{\max})/\hat{\beta}(1)$ (debe ser $\ll 1$)
+        \item<5-> $R^2$ alto indica ajuste consistente con decaimiento
+    \end{itemize}
+\end{frame}

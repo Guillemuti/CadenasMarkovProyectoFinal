@@ -1,0 +1,146 @@
+==============================================================================
+ANÁLISIS DE DATOS DE VUELOS - ON-TIME REPORTING 2025
+==============================================================================
+
+FUENTE DE DATOS:
+- Bureau of Transportation Statistics (BTS)
+- Programa: On-Time Performance Reporting
+- Año: 2025 (Enero - Julio)
+
+ESTRUCTURA DE LA CARPETA:
+- Ubicación: /home/ge-murillo/universidad/CadenasMarkovProyectoFinal/DatosVuelos/
+- 7 directorios (uno por mes)
+- Cada directorio contiene: T_ONTIME_REPORTING.csv (~50 MB)
+
+==============================================================================
+COBERTURA TEMPORAL Y VOLUMEN
+==============================================================================
+
+Mes             | Número de Vuelos | Archivo
+----------------|------------------|------------------------------------------
+Enero 2025      | 539,748          | T_ONTIME_REPORTING_20251207_115006
+Febrero 2025    | 504,885          | T_ONTIME_REPORTING_20251207_114942
+Marzo 2025      | 600,873          | T_ONTIME_REPORTING_20251207_114915
+Abril 2025      | 583,951          | T_ONTIME_REPORTING_20251207_114842
+Mayo 2025       | 605,649          | T_ONTIME_REPORTING_20251207_114808
+Junio 2025      | 611,576          | T_ONTIME_REPORTING_20251207_114746
+Julio 2025      | 631,429          | T_ONTIME_REPORTING_20251207_114721
+----------------|------------------|------------------------------------------
+TOTAL           | 4,078,111 vuelos | ~350 MB total
+
+==============================================================================
+ESTRUCTURA DE DATOS (12 variables)
+==============================================================================
+
+TEMPORALES:
+  • YEAR: Año (2025)
+  • MONTH: Mes (1-7)
+  • DAY_OF_MONTH: Día del mes (1-31)
+  • FL_DATE: Fecha completa del vuelo (formato MM/DD/YYYY)
+
+AEROPUERTO DE ORIGEN:
+  • ORIGIN_AIRPORT_ID: ID del aeropuerto de origen
+  • ORIGIN_AIRPORT_SEQ_ID: ID secuencial del aeropuerto origen
+  • ORIGIN_CITY_MARKET_ID: ID del mercado/ciudad de origen
+
+AEROPUERTO DE DESTINO:
+  • DEST_AIRPORT_ID: ID del aeropuerto de destino
+  • DEST_AIRPORT_SEQ_ID: ID secuencial del aeropuerto destino
+  • DEST_CITY_MARKET_ID: ID del mercado/ciudad de destino
+
+MÉTRICAS DE PUNTUALIDAD:
+  • ARR_DEL15: Indicador de retraso ≥15 minutos en llegada (0.00 o 1.00)
+  • CANCELLED: Indicador de vuelo cancelado (0.00 o 1.00)
+
+==============================================================================
+ESTADÍSTICAS DE PUNTUALIDAD - JULIO 2025 (ejemplo)
+==============================================================================
+
+Total de vuelos:                631,428
+Días de cobertura:              31 días (mes completo)
+Promedio vuelos/día:            ~20,369 vuelos
+
+RETRASOS:
+  • Vuelos con retraso ≥15 min: 177,012 (28.03%)
+  • Vuelos puntuales:           454,416 (71.97%)
+
+CANCELACIONES:
+  • Vuelos cancelados:          0 (0.00%)
+
+==============================================================================
+APLICACIONES POTENCIALES PARA CADENAS DE MARKOV
+==============================================================================
+
+1. ANÁLISIS DE PUNTUALIDAD COMO PROCESO ESTOCÁSTICO:
+   - Estados: {Puntual, Retrasado}
+   - Analizar probabilidad de retraso dado historial de la ruta/aerolínea
+   - Estimar matriz de transición P para diferentes rutas
+
+2. ANÁLISIS DE RUTAS (ORIGEN-DESTINO):
+   - Construir cadena de Markov de tráfico aéreo
+   - Estados: Aeropuertos (identificados por ORIGIN/DEST_AIRPORT_ID)
+   - Transiciones: Flujo de pasajeros entre aeropuertos
+   - Calcular distribución estacionaria (aeropuertos más transitados)
+
+3. ESTIMACIÓN DE COEFICIENTES β DE MEZCLA:
+   - Aplicar estimador de McDonald (2015) a series temporales de retrasos
+   - Variable: Indicador de retraso diario por aeropuerto/ruta
+   - Verificar propiedad de β-mixing: dependencia temporal en retrasos
+   - Comparar coeficientes β entre diferentes aeropuertos
+
+4. SERIES TEMPORALES DE PUNTUALIDAD:
+   - Analizar serie temporal diaria: X_t = proporción de retrasos en día t
+   - Estimar β(a) para medir dependencia entre días separados por lag a
+   - Comparar con estimador de S&P 500 del notebook actual
+
+5. ANÁLISIS POR AEROPUERTO:
+   - Identificar aeropuertos con mayor/menor dependencia temporal
+   - Comparar coeficientes β entre aeropuertos hub vs regionales
+
+6. MODELO GARCH PARA VARIABILIDAD DE RETRASOS:
+   - Modelar volatilidad en retrasos (similar al análisis de S&P 500)
+   - Usar GARCH para predecir períodos de alta variabilidad
+   - Validar con estimador β de residuos
+
+==============================================================================
+POSIBLES ANÁLISIS ESPECÍFICOS
+==============================================================================
+
+A. CADENA DE MARKOV DE ESTADOS DE PUNTUALIDAD:
+   - Para cada ruta/aeropuerto, crear serie temporal binaria:
+     X_t = 1 si vuelo en día t tiene retraso ≥15 min, 0 si no
+   - Estimar matriz de transición 2×2:
+     P = [P(Puntual|Puntual)    P(Retrasado|Puntual)  ]
+         [P(Puntual|Retrasado)  P(Retrasado|Retrasado)]
+   - Calcular distribución estacionaria π
+
+B. RED DE TRÁFICO AÉREO:
+   - Estados = Aeropuertos
+   - P(i,j) = Proporción de vuelos desde aeropuerto i hacia j
+   - Encontrar aeropuertos más centrales (PageRank)
+   - Distribución estacionaria = tráfico esperado a largo plazo
+
+C. ESTIMADOR β PARA DEPENDENCIA TEMPORAL:
+   - Crear serie temporal: R_t = tasa de retraso en día t
+   - Aplicar estimador McDonald (2015) con d=1, a=1,2,...,30
+   - Graficar β^1(a) vs lag a
+   - Verificar si β(a) → 0 (propiedad de mixing)
+
+D. COMPARACIÓN ENTRE MESES:
+   - Calcular coeficientes β para cada mes (Ene-Jul)
+   - Identificar meses con mayor dependencia temporal
+   - Relacionar con estacionalidad/eventos especiales
+
+==============================================================================
+PRÓXIMOS PASOS SUGERIDOS
+==============================================================================
+
+1. Consolidar los 7 archivos CSV en un único DataFrame
+2. Mapear códigos de aeropuertos a nombres (requiere tabla auxiliar)
+3. Crear series temporales de puntualidad diaria
+4. Implementar estimador β adaptado para datos de vuelos
+5. Comparar resultados con análisis de S&P 500
+6. Generar visualizaciones de redes de vuelos
+7. Escribir capítulo 3 del informe con análisis de datos de vuelos
+
+==============================================================================
