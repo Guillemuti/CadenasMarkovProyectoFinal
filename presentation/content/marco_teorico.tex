@@ -1,18 +1,38 @@
 \section{Marco Teórico}
 
-\begin{frame}{Coeficientes de Mezcla}
+\begin{frame}{Distancia de Variación Total}
     \begin{definition}
-        Para un proceso estocástico $\{X_t\}$, el \textbf{coeficiente de mezcla $\beta$} se define como:
-        {\small $$\beta(n) = \sup \frac{1}{2} \sum_{i,j} |P(A_i \cap B_j) - P(A_i)P(B_j)|$$}
-        donde el supremo se toma sobre particiones finitas de $\sigma(X_1, \ldots, X_k)$ y $\sigma(X_{k+n}, X_{k+n+1}, \ldots)$
+        Sean $\mu_1$ y $\mu_2$ medidas de probabilidad con densidades $f_{\mu_1}$ y $f_{\mu_2}$ respecto a una medida dominante $\lambda$. La \textbf{distancia de variación total} es:
+        $$TV(\mu_1, \mu_2) = \frac{1}{2} \int_\Omega \left| f_{\mu_1}(x) - f_{\mu_2}(x) \right| d\lambda(x)$$
     \end{definition}
 
     \vspace{0.5em}
 
     \begin{itemize}
-        \item<2-> $\beta(n)$ mide la \emphasis{dependencia} entre pasado y futuro
-        \item<3-> $0 \leq \beta(n) \leq 1$ para todo $n$
-        \item<4-> $\beta(n)$ es \highlight{no creciente} en $n$
+        \item<2-> $0 \leq TV(\mu_1, \mu_2) \leq 1$
+        \item<3-> Forma equivalente: $TV(\mu_1, \mu_2) = \sup_{A \in \mathcal{F}} |\mu_1(A) - \mu_2(A)|$
+        \item<4-> $TV(\mu_1, \mu_2) = 0 \iff \mu_1 = \mu_2$
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Coeficiente de Mezcla $\beta$}
+    \begin{definition}
+        Para un proceso estocástico $\{X_t\}$, el \textbf{coeficiente de mezcla $\beta$} se define como:
+        $$\beta(n) = TV\left(\mathcal{L}(X_0, X_n), \mathcal{L}(X_0) \otimes \mathcal{L}(X_n)\right)$$
+    \end{definition}
+
+    \vspace{0.3em}
+
+    \begin{block}<2->{Forma Integral}
+        {\small $$\beta(n) = \frac{1}{2} \int \int \left| f_{X_0, X_n}(x, y) - f_{X_0}(x) f_{X_n}(y) \right| dx \, dy$$}
+    \end{block}
+
+    \vspace{0.3em}
+
+    \begin{itemize}
+        \item<3-> $\beta(n)$ mide la \emphasis{dependencia} entre pasado y futuro
+        \item<4-> $0 \leq \beta(n) \leq 1$ para todo $n$
+        \item<5-> $\beta(n)$ es \highlight{no creciente} en $n$
     \end{itemize}
 \end{frame}
 
